@@ -1,0 +1,33 @@
+<p>Profile</p>
+ユーザー名:<%= @user.username %>さん<br>
+メールアドレス:<%= @user.email %><br>
+プロフィール:<%= @user.profile %><br>
+<img src="<%= @user.image %>" width="200px" height="200px" style="border-radius:50%;object-fit:cover;"><br>
+<%= render 'follow_form' %>
+<%= render 'stats' %>
+<h2>投稿内容</h2>
+<% @user.tweets.each do |tweet| %>
+  <a href="/tweets/<%= tweet.id %>"><%= tweet.text %></a>
+  <hr>
+<% end %>
+<h3>いいねしている投稿</h3>
+<% @user.liked_tweets.each do |tweet| %>
+  <%= tweet.user.email %>
+  <%= tweet.text %>
+<% end %>
+
+<%= link_to 'UserArchive', users_path %>
+<% if @user.id == current_user.id %>
+
+<% else %>
+  <% if @isRoom == true %>
+    <p><a href="/rooms/<%= @roomId %>">チャットへ</a>
+  <% else %>
+    <%= form_for @room do |f| %>
+      <%= fields_for @entry do |e| %>
+        <%= e.hidden_field :user_id, :value=> @user.id %>
+      <% end %>
+      <%= f.submit "チャットを始める" %>
+    <% end %>
+  <% end %>
+<% end %>

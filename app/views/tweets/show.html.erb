@@ -1,0 +1,41 @@
+<h1>Tweets#show</h1>
+<p>Find me in app/views/tweets/show.html.erb</p>
+<p>
+ <%= @tweet.user.username %>
+</p>
+
+<p>
+ <strong>Title:</strong>
+ <%= @tweet.title %>
+</p>
+
+<p>
+ <strong>Text:</strong>
+ <%= @tweet.text %>
+</p>
+
+<p>
+  <strong>Image:</strong><br>
+  <img src="<%= @tweet.img %>" width="500px" height="500px" />
+</p>
+
+<h3>いいね件数: <%= @tweet.likes.count %></h3>
+<% if current_user.already_liked?(@tweet) %>
+  <%= button_to 'いいねを取り消す', tweet_like_path(@tweet), method: :delete %>
+<% else %>
+  <%= button_to 'いいね', tweet_likes_path(@tweet) %>
+<% end %>
+<h2>いいねしたユーザー</h2>
+<% @tweet.liked_users.each do |user| %>
+  <ul>
+   <li><%= user.username %></li>
+  </ul>
+<% end %>
+
+<h2>Comments</h2>
+<%= render @tweet.comments %>
+
+<h2>Add a comment:</h2>
+<%= render "comments/form" %>
+
+<%= link_to 'Back', tweets_path %> | <%= link_to 'Edit', edit_tweet_path(@tweet) %>

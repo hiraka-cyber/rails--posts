@@ -1,0 +1,21 @@
+<h1>Tweets#index</h1>
+<p>Find me in app/views/tweets/index.html.erb</p>
+<h1>Listing tweets</h1>
+<%= link_to 'New tweet', new_tweet_path %>
+<table>
+ <tr>
+  <th>Title</th>
+  <th>Text</th>
+  <th colspan="3"></th>
+ </tr>
+<% @tweets.each do |tweet| %>
+    <tr>
+     <td><%= tweet.title %></td>
+     <td><%= tweet.text %></td>
+     <td><%= link_to 'Show',tweet_path(tweet) %></td>
+     <td><%= link_to 'Edit',edit_tweet_path(tweet) %></td>
+     <td><%= link_to 'Destroy',tweet_path(tweet),method: :delete, data: {confirm: 'Are you sure?'} %></td>
+     <td>(<%= tweet.liked_users.count %>)</td>
+    </tr>
+<% end %>
+</table>
